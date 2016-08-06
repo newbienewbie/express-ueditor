@@ -22,9 +22,7 @@ describe('测试 read-dir.js', function () {
                 fileList2 = fs.readdirSync(dir);
                 return fileList2;
             }).then(() => {
-                console.log(fileList1,fileList2);
                 var flag = compare(fileList1,fileList2);
-                console.log(flag);
                 return flag;
             }).then(flag=>{
                 assert.ok(flag,"readdirSync结果不一致");
@@ -44,15 +42,12 @@ describe('测试 read-dir.js', function () {
 
 function compare(list1, list2) {
     var flag=true;
-    console.log('compare begins');
     for (var i = 0; i <  list1.length; i++) {
-        console.log(i);
         if (list2.indexOf(list1[i]) == -1) {
             flag = false;
             break;
         }
     }
-    console.log(1111111);
     if (!flag) {
         return flag;
     }
