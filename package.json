@@ -11,6 +11,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "busboy": "^0.2.13",
     "mocha": "^3.0.1"
+  },
+  "devDependencies": {
+    "node-mocks-http": "^1.5.2"
   }
 }
