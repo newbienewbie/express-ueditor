@@ -73,5 +73,29 @@ describe('测试UEditor::upload()方法', function () {
             });
     });
 
+    it('上传不允许的文件类型', function (done) {
+        const app = express();
+        const ueditor = new UEditor({});
+        const action='uploadimage';
+        app.use("/testeditor", ueditor.upload(action));
+        supertest(app)
+            .post("/testeditor")
+            .query({
+                action: action
+            })
+            .attach('aa',__filename)
+            .end(function (err, res) {
+                if (err) {
+                    assert.fail(err);
+                } else{
+                    assert.equal(res.status,'200','post提交正常');
+                    const response=JSON.parse(res.text);
+                    assert.equal(response.state,'FAIL','上传应失败');
+                    assert.equal(response.error,'错误的文件类型',"不允许上次js文件");
+                    done();
+                }
+            });
+    });
+
 });
 
