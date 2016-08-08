@@ -64,7 +64,6 @@ describe('测试UEditor::upload()方法', function () {
                 if (err) {
                     assert.fail(err);
                 } else{
-                    console.log(res);
                     assert.equal(res.status,'200','post提交正常');
                     const response=JSON.parse(res.text);
                     assert.equal(response.state,'SUCCESS','上传应该成功');
