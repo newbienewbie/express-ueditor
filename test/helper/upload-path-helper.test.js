@@ -7,28 +7,6 @@ describe('测试 upload-path-helper.test.js', function () {
     describe('以默认的配置进行测试', function () {
         const defaultConfig = require('../../lib/config.default.js');
         const helper = new Helper(defaultConfig);
-        describe('测试 getPattern()方法：', () => {
-            it('should equals image', function () {
-                const p = helper.getPattern('uploadimage');
-                assert.equal(p, "image", "uploadimage应该对应image");
-            });
-
-            it('should equals video', function () {
-                const p = helper.getPattern('uploadvideo');
-                assert.equal(p, "video", "uploadvideo应该对应video");
-            });
-
-            it('should not equals video', function () {
-                const p = helper.getPattern('uploadsnapscreen');
-                assert.notEqual(p, "video", "uploadsnapscreen不应该对应video");
-            });
-
-            it('should equals unknown', function () {
-                const p = helper.getPattern('uplodnapscn');
-                assert.equal(p, "unknown", "传递一个莫名其妙的action应该返回unknown");
-            });
-
-        });
 
         describe('测试_algin()方法', function () {
             it('测试超过指定宽度截取',()=>{
