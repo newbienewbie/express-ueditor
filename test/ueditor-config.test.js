@@ -1,75 +1,67 @@
 const UEditor = require('../lib/ueditor');
 const defaultConfig = require('../lib/config.default.js');
 
+const fs = require('fs');
 const assert = require('assert');
+const express = require('express');
+const supertest = require('supertest');
 
-
-const ueditor = new UEditor();
 
 describe('测试UEditor类', function () {
 
 
-    const req={
-        query:{
-            action:'',
-        }
-    };
-    
-    const res={
-        send:(str)=>{},    // 留待具体业务场景模拟
-        end:(str)=>{},     // 留待具体业务场景模拟
-    };
+    describe("测试config()方法", () => {
 
-    describe('默认情况下的finalConifg方法：', function(){
-        it('不提供配置的情况下，配置和直接读取的配置应该相等', function () {
+        it('默认的内部配置和直接读取的文件配置应该相等', function () {
+            const app = express();
+            const ueditor = new UEditor();
             assert.ok(deepCompare(ueditor.finalConfig, defaultConfig), "二者理应相等，包括属性出现的顺序");
         });
-    });
-    
-    describe("测试config()方法",()=>{
-    
-       it('action="config"时不会触发next()',()=>{
-            const configMiddle=ueditor.config();
-            const executed=false;
-            req.query.action="config";
-            configMiddle(req,res,()=>{
-                executed=true;
-                assert.fail('这里不该被执行');
-            });
-            assert.ok(!executed,"当action='config',理应不会触发next()");
-        });
-        
-        
-        it('action="config"时，res.send()会被调用并返回配置',()=>{
-            const executed=false
-            let changedBySend="";
-            res.send=function(str){
-                changedBySend=str;
-            };
-            ueditor.config()(req,res,()=>{
-                executed=true;
-                assert.fail('这里不该被执行');
-            });
-            assert.ok(!executed,"next()方法不该被执行");
-            assert.equal(changedBySend,JSON.stringify(ueditor.finalConfig),"send(str)发送的数据理应是最终的config");
-        });
-        
-        
-        it("action!='config'会触发next()",()=>{
-            const actions=['config1',undefined,null,''];
-            actions.forEach(i=>{
-                req.query.action=i;
-                let executed=false;
-                ueditor.config()(req,res,()=>{
-                    executed=true;
+
+        it('默认应该返回默认的文件配置', function (done) {
+            const app = express();
+            const ueditor = new UEditor();
+            app.use('/testueditor', ueditor.config());
+            this.timeout(5000);
+            supertest(app)
+                .get('/testueditor')
+                .query({ action: 'config' })
+                .end(function (err, res) {
+                    if (err) {
+                        assert.fail(err);
+                        done();
+                    } else {
+                        const config = JSON.parse(res.text);
+                        assert.ok(deepCompare(config, defaultConfig), '默认的配置和服务器返回默认的配置，理应相等');
+                        done();
+                    }
                 });
-                assert.ok(executed,`当action!=${i},理应触发next()`);
+        });
+
+        it('应该返回自定义的配置', function (done) {
+            const app = express();
+            const imagePathFormat = 'a test from custom format';
+            const ueditor = new UEditor({
+                imagePathFormat: imagePathFormat,
             });
+            app.use('/testueditor', ueditor.config());
+
+            supertest(app)
+                .get('/testueditor')
+                .query({
+                    action: 'config'
+                }).end((err, res) => {
+                    if (err) {
+                        assert.fail(err);
+                    } else {
+                        const config = JSON.parse(res.text);
+                        assert.equal(config.imagePathFormat, imagePathFormat, "应该返回自定义的配置");
+                        done();
+                    }
+                });
         });
 
     });
-
-    describe('测试listimage()方法');
 
 
 });
