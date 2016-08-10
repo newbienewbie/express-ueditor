@@ -1,5 +1,8 @@
+# express-ueditor
 
-为 [ueditor](http://ueditor.baidu.com/website/) 编写的Express服务端中间件。
+* 为 [ueditor](http://ueditor.baidu.com/website/) 编写的Express服务端中间件。
+* 支持各种自定义配置
+* 测试驱动
 
 ## 入口程序：UEditor
 
@@ -20,15 +23,15 @@ router.use("/controller",ueditor.upload('uploadfile'));
 app.use(router);
 ```
 
-会根据ueditor前端传来的actionz做出响应
+会根据ueditor前端传来的action做出响应
 
 ## api
 
 ### config()
 
-生成配置中间件。当ueditor前端传来的action=config时，会自动根据服务端的配置来返回JSON字符串给前端。
+生成配置中间件。当ueditor前端传来的action="config"时，会自动根据服务端的配置来返回JSON字符串给前端。
 
-### upload(actionStr)
+### upload(actionStr="uploadfile")
 
 生成上传中间件：用于根据服务端配置的actionStr的不同，生成不同的中间件，处理图像上传、文件上传、视频上传、涂鸦上传、和远程抓取上传。
 
@@ -37,4 +40,5 @@ app.use(router);
 ## todo
 
 * listimage暂时之搭建了一个框架
-* 更方便的路由配置
+* 更方便的路由配置（默认）
+* 上传到其他服务器七牛、亚马逊

@@ -10,6 +10,10 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "repository": {
+      "type":"git",
+      "url": "https://github.com/newbienewbie/express-ueditor"
+  },
   "dependencies": {
     "busboy": "^0.2.13",
     "mocha": "^3.0.1"
