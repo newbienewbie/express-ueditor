@@ -1,11 +1,11 @@
 {
   "name": "express-ueditor",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "test": "mocha test --recursive"
+    "test": "mocha test --recursive --use_strict"
   },
   "keywords": [],
   "author": "",

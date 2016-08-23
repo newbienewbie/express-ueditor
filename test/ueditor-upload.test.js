@@ -49,7 +49,7 @@ describe('测试UEditor::upload()方法', function () {
     });
 
 
-    it('给予指定的action，会触发上传', function (done) {
+    it('给予指定的action，会触发上传:测试uploadimage', function (done) {
         const app = express();
         const ueditor = new UEditor({});
         const action='uploadimage';
@@ -72,6 +72,31 @@ describe('测试UEditor::upload()方法', function () {
                 }
             });
     });
+
+    it('给予指定的action，会触发上传:测试uploadvideo', function (done) {
+        const app = express();
+        const ueditor = new UEditor({});
+        const action='uploadvideo';
+        app.use("/testeditor", ueditor.upload(action));
+        supertest(app)
+            .post("/testeditor")
+            .query({
+                action: action
+            })
+            .attach('aa',path.join(__dirname,'test-upload-static-files','video','test-upload-video.mp4'))
+            .end(function (err, res) {
+                if (err) {
+                    assert.fail(err);
+                } else{
+                    assert.equal(res.status,'200','post提交正常');
+                    const response=JSON.parse(res.text);
+                    assert.equal(response.state,'SUCCESS','上传应该成功');
+                    assert.equal(response.title,'test-upload-video.mp4',"title应该为文件名");
+                    done();
+                }
+            });
+    });
+
 
     it('上传不允许的文件类型', function (done) {
         const app = express();
