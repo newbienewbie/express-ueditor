@@ -1,6 +1,11 @@
 # express-ueditor
 
-* 为 [ueditor](http://ueditor.baidu.com/website/) 编写的Express服务端中间件。
+一套 Express 服务端中间件。
+
+本身为 [UEditor](http://ueditor.baidu.com/website/) 编写，但是`express-ueditor`完全可以脱离`UEditor`使用，比如上传文件、上传图片、上传视频等操作。
+
+* 类`UEditor`中是`express-ueditor`各功能的统一出入口，
+* 各组件以高阶函数的形式提供，比如`config()`,`upload(actionStr)`分别返回一个中间件函数。
 * 支持各种自定义配置
 * 测试驱动
 
@@ -35,7 +40,9 @@ app.use(router);
 
 生成上传中间件：用于根据服务端配置的actionStr的不同，生成不同的中间件，处理图像上传、文件上传、视频上传、涂鸦上传、和远程抓取上传。
 
-前端上传文件时，会向后端相应URL发送请求，QueryString中带上action=`uploadimage`、`uploadfile`之类的参数
+百度`UEditor`编辑器前端上传文件时，会向相应后端URL发送请求，在`QueryString`中带上`action=uploadimage`、`action=uploadfile`之类的参数。
+
+注意，如果脱离`UEditor`使用，前端向服务器发起上传请求时，应手工带上这类的`action`参数。
 
 ## todo
 
