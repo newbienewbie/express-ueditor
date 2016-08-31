@@ -26,11 +26,9 @@ describe('测试 read-dir.js', function () {
                 return flag;
             }).then(flag=>{
                 assert.ok(flag,"readdirSync结果不一致");
-                done();
-            }).catch(e=>{
-                assert.ok(false,e);
-                done();
-            });
+            })
+            .then(done)
+            .catch(done);
 
 
         });
