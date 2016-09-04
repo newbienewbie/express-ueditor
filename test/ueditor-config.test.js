@@ -28,8 +28,7 @@ describe('测试UEditor类', function () {
                 .query({ action: 'config' })
                 .end(function (err, res) {
                     if (err) {
-                        assert.fail(err);
-                        done();
+                        done(err);
                     } else {
                         const config = JSON.parse(res.text);
                         assert.ok(deepCompare(config, defaultConfig), '默认的配置和服务器返回默认的配置，理应相等');
@@ -52,7 +51,7 @@ describe('测试UEditor类', function () {
                     action: 'config'
                 }).end((err, res) => {
                     if (err) {
-                        assert.fail(err);
+                        done(err);
                     } else {
                         const config = JSON.parse(res.text);
                         assert.equal(config.imagePathFormat, imagePathFormat, "应该返回自定义的配置");

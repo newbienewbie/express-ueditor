@@ -5,7 +5,7 @@ const UEditor=require('../../lib/ueditor.js');
 const defaultConfig=require('../../lib/config.default.js');
 
 
-describe('测试 get-item-in-config.test.js ：', () => {
+describe('测试 get-item-in-config.js ：', () => {
     const ueditor=new UEditor();
     it('默认情况下应该和直接读取配置文件相一致', function () {
         const pattern=['image',"file","video","snapscreen",'scrawl'];

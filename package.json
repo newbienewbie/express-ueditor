@@ -1,6 +1,6 @@
 {
   "name": "express-ueditor",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -11,15 +11,15 @@
   "author": "",
   "license": "ISC",
   "repository": {
-      "type":"git",
-      "url": "https://github.com/newbienewbie/express-ueditor"
+    "type": "git",
+    "url": "https://github.com/newbienewbie/express-ueditor"
   },
   "dependencies": {
-    "busboy": "^0.2.13",
-    "mocha": "^3.0.1"
+    "busboy": "^0.2.13"
   },
   "devDependencies": {
     "express": "^4.14.0",
+    "mocha": "^3.0.2",
     "supertest": "^2.0.0"
   }
 }

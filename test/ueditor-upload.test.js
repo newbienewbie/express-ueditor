@@ -21,7 +21,7 @@ describe('测试UEditor::upload()方法', function () {
             })
             .end(function (err, res) {
                 if (err) {
-                    throw (err);
+                    done(err);
                 } else {
                     done();
                 }
@@ -40,10 +40,10 @@ describe('测试UEditor::upload()方法', function () {
             })
             .end(function (err, res) {
                 if (err) {
-                    assert.fail(err);
+                    done(err);
                 } else {
-                    assert.equal(res.status,'404','get请求应无响应');
-                    done();
+                    const msg=res.status=='404'?null:'get请求应无响应';
+                    done(msg);
                 }
             });
     });
@@ -62,7 +62,7 @@ describe('测试UEditor::upload()方法', function () {
             .attach('aa',path.join(__dirname,'test-upload-static-files','image','test-upload-bg-qingchen-chouyouji.jpg'))
             .end(function (err, res) {
                 if (err) {
-                    assert.fail(err);
+                    done(err);
                 } else{
                     assert.equal(res.status,'200','post提交正常');
                     const response=JSON.parse(res.text);
@@ -86,7 +86,7 @@ describe('测试UEditor::upload()方法', function () {
             .attach('aa',path.join(__dirname,'test-upload-static-files','video','test-upload-video.mp4'))
             .end(function (err, res) {
                 if (err) {
-                    assert.fail(err);
+                    done(err);
                 } else{
                     assert.equal(res.status,'200','post提交正常');
                     const response=JSON.parse(res.text);
@@ -111,7 +111,7 @@ describe('测试UEditor::upload()方法', function () {
             .attach('aa',__filename)
             .end(function (err, res) {
                 if (err) {
-                    assert.fail(err);
+                    done(err);
                 } else{
                     assert.equal(res.status,'200','post提交正常');
                     const response=JSON.parse(res.text);
